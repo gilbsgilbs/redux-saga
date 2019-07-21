@@ -1,3 +1,4 @@
+// TypeScript Version: 3.2
 import { Action, Middleware } from 'redux'
 import { Saga, Buffer, Channel, END, Predicate, SagaIterator, Task } from '@redux-saga/types'
 import { ForkEffect } from './effects'
