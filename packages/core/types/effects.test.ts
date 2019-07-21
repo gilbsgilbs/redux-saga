@@ -585,7 +585,7 @@ function* testCancel(): SagaIterator {
 function* testDetach(): SagaIterator {
   yield detach(fork(() => {}))
 
-  // TODO: why an error was expected here?
+  // $ExpectError
   yield detach(call(() => {}))
 }
 
