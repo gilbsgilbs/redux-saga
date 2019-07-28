@@ -76,6 +76,6 @@
   },
   "types": "./types/index.d.ts",
   "typesVersions": {
-      ">=3.6": { "*": ["./ts3.6/*"] }
+      ">=3.5": { "*": ["./types/ts3.5/*"] }
   }
 }
