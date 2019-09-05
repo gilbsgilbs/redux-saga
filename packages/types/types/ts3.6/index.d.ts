@@ -134,7 +134,7 @@ export type CombinatorEffectDescriptor<E = any> =
   | ObjectCombinatorEffectDescriptor<E>
 
 export interface CombinatorEffect<T, P> extends Effect<
-  T, CombinatorEffectDescriptor<any>
+  T, CombinatorEffectDescriptor<P>
 > {
   combinator: true
 }

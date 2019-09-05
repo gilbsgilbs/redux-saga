@@ -6,8 +6,6 @@ import {
   Effect,
   Buffer,
   CombinatorEffect,
-  ArrayCombinatorEffectDescriptor,
-  ObjectCombinatorEffectDescriptor,
   CombinatorEffectDescriptor,
   SimpleEffect,
   END,
@@ -188,7 +186,10 @@ export function takeEvery<P extends ActionPattern, Fn extends (...args: any[]) =
   worker: Fn,
   ...args: HelperWorkerParameters<ActionMatchingPattern<P>, Fn>
 ): ForkEffect<never>
-export function takeEvery<A extends Action>(pattern: ActionPattern<A>, worker: (action: A) => any): ForkEffect<never>
+export function takeEvery<A extends Action>(
+  pattern: ActionPattern<A>,
+  worker: (action: A) => any,
+): ForkEffect<never>
 export function takeEvery<A extends Action, Fn extends (...args: any[]) => any>(
   pattern: ActionPattern<A>,
   worker: Fn,
@@ -199,7 +200,10 @@ export function takeEvery<A extends Action, Fn extends (...args: any[]) => any>(
  * You can also pass in a channel as argument and the behaviour is the same as
  * `takeEvery(pattern, saga, ...args)`.
  */
-export function takeEvery<T>(channel: TakeableChannel<T>, worker: (item: T) => any): ForkEffect<never>
+export function takeEvery<T>(
+  channel: TakeableChannel<T>,
+  worker: (item: T) => any,
+): ForkEffect<never>
 export function takeEvery<T, Fn extends (...args: any[]) => any>(
   channel: TakeableChannel<T>,
   worker: Fn,
@@ -266,7 +270,10 @@ export function takeLatest<P extends ActionPattern, Fn extends (...args: any[]) 
   worker: Fn,
   ...args: HelperWorkerParameters<ActionMatchingPattern<P>, Fn>
 ): ForkEffect<never>
-export function takeLatest<A extends Action>(pattern: ActionPattern<A>, worker: (action: A) => any): ForkEffect<never>
+export function takeLatest<A extends Action>(
+  pattern: ActionPattern<A>,
+  worker: (action: A) => any,
+): ForkEffect<never>
 export function takeLatest<A extends Action, Fn extends (...args: any[]) => any>(
   pattern: ActionPattern<A>,
   worker: Fn,
@@ -277,7 +284,10 @@ export function takeLatest<A extends Action, Fn extends (...args: any[]) => any>
  * You can also pass in a channel as argument and the behaviour is the same as
  * `takeLatest(pattern, saga, ...args)`.
  */
-export function takeLatest<T>(channel: TakeableChannel<T>, worker: (item: T) => any): ForkEffect<never>
+export function takeLatest<T>(
+  channel: TakeableChannel<T>,
+  worker: (item: T) => any,
+): ForkEffect<never>
 export function takeLatest<T, Fn extends (...args: any[]) => any>(
   channel: TakeableChannel<T>,
   worker: Fn,
@@ -338,7 +348,10 @@ export function takeLeading<P extends ActionPattern, Fn extends (...args: any[])
   worker: Fn,
   ...args: HelperWorkerParameters<ActionMatchingPattern<P>, Fn>
 ): ForkEffect<never>
-export function takeLeading<A extends Action>(pattern: ActionPattern<A>, worker: (action: A) => any): ForkEffect<never>
+export function takeLeading<A extends Action>(
+  pattern: ActionPattern<A>,
+  worker: (action: A) => any,
+): ForkEffect<never>
 export function takeLeading<A extends Action, Fn extends (...args: any[]) => any>(
   pattern: ActionPattern<A>,
   worker: Fn,
@@ -349,7 +362,10 @@ export function takeLeading<A extends Action, Fn extends (...args: any[]) => any
  * You can also pass in a channel as argument and the behaviour is the same as
  * `takeLeading(pattern, saga, ...args)`.
  */
-export function takeLeading<T>(channel: TakeableChannel<T>, worker: (item: T) => any): ForkEffect<never>
+export function takeLeading<T>(
+  channel: TakeableChannel<T>,
+  worker: (item: T) => any,
+): ForkEffect<never>
 export function takeLeading<T, Fn extends (...args: any[]) => any>(
   channel: TakeableChannel<T>,
   worker: Fn,
@@ -443,7 +459,10 @@ export interface ChannelPutEffectDescriptor<T> {
  *   Promise as result, or any other value.
  * @param args An array of values to be passed as arguments to `fn`
  */
-export function call<Fn extends (...args: any[]) => any>(fn: Fn, ...args: Parameters<Fn>): CallEffect<SagaReturnType<Fn>>
+export function call<Fn extends (...args: any[]) => any>(
+  fn: Fn,
+  ...args: Parameters<Fn>,
+): CallEffect<SagaReturnType<Fn>>
 /**
  * Same as `call([context, fn], ...args)` but supports passing a `fn` as string.
  * Useful for invoking object's methods, i.e.
@@ -522,7 +541,10 @@ export function apply<Ctx, Fn extends (this: Ctx, ...args: any[]) => any>(
  * @param args an array to be passed as arguments for `fn`
  */
 export function cps<Fn extends (cb: CpsCallback<any>) => any>(fn: Fn): CpsEffect<ReturnType<Fn>>
-export function cps<Fn extends (...args: any[]) => any>(fn: Fn, ...args: CpsFunctionParameters<Fn>): CpsEffect<ReturnType<Fn>>
+export function cps<Fn extends (...args: any[]) => any>(
+  fn: Fn,
+  ...args: CpsFunctionParameters<Fn>
+): CpsEffect<ReturnType<Fn>>
 /**
  * Same as `cps([context, fn], ...args)` but supports passing a `fn` as string.
  * Useful for invoking object's methods, i.e.
@@ -616,7 +638,10 @@ export type CpsEffect<RT> = SimpleEffect<'CPS', CallEffectDescriptor<RT>>
  * @param fn A Generator function, or normal function which returns a Promise as result
  * @param args An array of values to be passed as arguments to `fn`
  */
-export function fork<Fn extends (...args: any[]) => any>(fn: Fn, ...args: Parameters<Fn>): ForkEffect<SagaReturnType<Fn>>
+export function fork<Fn extends (...args: any[]) => any>(
+  fn: Fn,
+  ...args: Parameters<Fn>,
+): ForkEffect<SagaReturnType<Fn>>
 /**
  * Same as `fork([context, fn], ...args)` but supports passing a `fn` as string.
  * Useful for invoking object's methods, i.e.
@@ -668,7 +693,10 @@ export interface ForkEffectDescriptor<RT> extends CallEffectDescriptor<RT> {
  * events which may affect the parent or the detached task are completely
  * independents (error, cancellation).
  */
-export function spawn<Fn extends (...args: any[]) => any>(fn: Fn, ...args: Parameters<Fn>): ForkEffect<SagaReturnType<Fn>>
+export function spawn<Fn extends (...args: any[]) => any>(
+  fn: Fn,
+  ...args: Parameters<Fn>
+): ForkEffect<SagaReturnType<Fn>>
 /**
  * Same as `spawn([context, fn], ...args)` but supports passing a `fn` as string.
  * Useful for invoking object's methods, i.e.
@@ -1115,7 +1143,11 @@ export function throttle<A extends Action, Fn extends (...args: any[]) => any>(
  * You can also pass in a channel as argument and the behaviour is the same as
  * `throttle(ms, pattern, saga, ...args)`.
  */
-export function throttle<T>(ms: number, channel: TakeableChannel<T>, worker: (item: T) => any): ForkEffect<never>
+export function throttle<T>(
+  ms: number,
+  channel: TakeableChannel<T>,
+  worker: (item: T) => any,
+): ForkEffect<never>
 export function throttle<T, Fn extends (...args: any[]) => any>(
   ms: number,
   channel: TakeableChannel<T>,
@@ -1206,7 +1238,11 @@ export function debounce<A extends Action, Fn extends (...args: any[]) => any>(
  * You can also pass in a channel as argument and the behaviour is the same as
  * `debounce(ms, pattern, saga, ...args)`.
  */
-export function debounce<T>(ms: number, channel: TakeableChannel<T>, worker: (item: T) => any): ForkEffect<never>
+export function debounce<T>(
+  ms: number,
+  channel: TakeableChannel<T>,
+  worker: (item: T) => any,
+): ForkEffect<never>
 export function debounce<T, Fn extends (...args: any[]) => any>(
   ms: number,
   channel: TakeableChannel<T>,
@@ -1272,18 +1308,18 @@ export function retry<Fn extends (...args: any[]) => any>(
  *      ])
  *    }
  */
-export function all<T extends ArrayCombinatorEffectDescriptor>(effects: T): AllEffect<T>
+export function all<T>(effects: T[]): AllEffect<T>
 /**
  * The same as `all([...effects])` but let's you to pass in a dictionary object
  * of effects with labels, just like `race(effects)`
  *
  * @param effects a dictionary Object of the form {label: effect, ...}
  */
-export function all<T extends ObjectCombinatorEffectDescriptor>(effects: T): AllEffect<T>
+export function all<T>(effects: { [key: string]: T }): AllEffect<T>
 
-export type AllEffect<T extends CombinatorEffectDescriptor> = CombinatorEffect<'ALL', T>
+export type AllEffect<T> = CombinatorEffect<'ALL', T>
 
-export type AllEffectDescriptor<E extends Effect = Effect> = CombinatorEffectDescriptor<E>
+export type AllEffectDescriptor<T> = CombinatorEffectDescriptor<T>
 
 /**
  * Creates an Effect description that instructs the middleware to run a *Race*
@@ -1325,15 +1361,15 @@ export type AllEffectDescriptor<E extends Effect = Effect> = CombinatorEffectDes
  *
  * @param effects a dictionary Object of the form {label: effect, ...}
  */
-export function race<T extends ObjectCombinatorEffectDescriptor>(effects: T): RaceEffect<T>
+export function race<T>(effects: { [key: string]: T }): RaceEffect<T>
 /**
  * The same as `race(effects)` but lets you pass in an array of effects.
  */
-export function race<T extends ArrayCombinatorEffectDescriptor>(effects: T): RaceEffect<T>
+export function race<T>(effects: T[]): RaceEffect<T>
 
-export type RaceEffect<T extends CombinatorEffectDescriptor> = CombinatorEffect<'RACE', T>
+export type RaceEffect<T> = CombinatorEffect<'RACE', T>
 
-export type RaceEffectDescriptor<E extends Effect = Effect> = CombinatorEffectDescriptor<E>
+export type RaceEffectDescriptor<T> = CombinatorEffectDescriptor<T>
 
 /**
  * [H, ...T] -> T
